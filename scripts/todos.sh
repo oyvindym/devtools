@@ -9,8 +9,8 @@ PURPLE_BOLD=$(printf '\033[1;35m')
 LINK_START=$(printf '\033]8;;')
 LINK_END=$(printf '\033]8;;')
 
-git diff origin/main \
-	| grep -E '^(\+{3}|\+.*TODO)' \
-	| sed -E "s/\+.*\/\/ TODO:/${WHITE}[ ] /g" \
-	| sed "s/\+\+\+ b/\n${PURPLE_BOLD}${PURPLE_UNDERLINE}/g"
-
+grep -E 'TODO:' $(git ls-files -m --others --exclude-standard) \
+	| sed -E "s/(.+\.[a-z]{2,3}).+(\/\/|{\/\*) TODO:(.*)$/${PURPLE_UNDERLINE}${PURPLE_BOLD}\1\n${WHITE}[ ]\3\n/g" \
+	| sed -E "s/\*\/}$//g"
+	 
+	
